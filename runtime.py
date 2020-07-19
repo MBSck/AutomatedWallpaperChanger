@@ -4,6 +4,8 @@ import ctypes
 import configparser
 import time
 
+from gui import AWCGUITRAY
+
 # If time is bigger than 1 hour log it in file so python know what time it is
 # Make config file that logs the timesteps and folder the user wants to use
 # Log when desktop wallpaper is changed
@@ -28,6 +30,9 @@ class AWC(metaclass=Singleton):
         self.wallpaper_path = ""
         self.time_since_last_timestep = 0
         self.timestep = 0
+
+        # Initializes the gui tray
+        self.gui_tray = AWCGUITRAY()
 
         # Defines the parser for the cfg files
         self.cfg_parser = configparser.RawConfigParser()
@@ -75,6 +80,9 @@ class AWC(metaclass=Singleton):
     def automatic_loop(self, wallpaper_folder_path):
         """Runs the part of the program that changes the desktop wallpaper"""
         while True:
+            # Checks if any action for the gui tray is taken
+            self.gui_tray.run()
+
             # On first run get the data of the different actions
             if self.initialized:
                 # On first activation set desktop the slow way
