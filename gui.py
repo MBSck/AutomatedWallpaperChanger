@@ -236,9 +236,12 @@ class AWCGUITRAY:
         # Sets timestep
         self.time_since_last_timestep = 0
 
-        # Configs the menu
+        # Config the menu
         self.menu = ['BLANK', ['&Open', '---', '&Action', ['Switch Wallpaper'], 'E&xit']]
         self.tray = sg.SystemTray(menu=self.menu, filename="AWC.png")
+
+        # Message after startup
+        self.tray.ShowMessage("Automated Desktop Changer", "Application has been minimized!")
 
     def get_data(self):
         """Gets the data from the config file"""
@@ -267,7 +270,8 @@ class AWCGUITRAY:
 
     def run(self):
         """Runs the gui interface"""
-        menu_item = self.tray.read()
+        menu_item = self.tray.read(timeout=0)
+
         if menu_item == 'Exit':
             # Kills the AWC.exe task
             try:
@@ -291,9 +295,9 @@ class AWCGUITRAY:
             self.update_config_file()
             self.switch_background(self.wallpaper_path)
 
-            return False
-
 
 if __name__ == "__main__":
+    help(sg.SystemTray.read)
     gui = AWCGUI
     gui()
+

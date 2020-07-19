@@ -42,8 +42,7 @@ class AWC(metaclass=Singleton):
         # Gets the data from the cfg file
         self.cfg_path = os.path.abspath("config.cfg")
 
-        # Initialized
-        self.initialized = True
+        # Gets data
         self.get_data()
 
         # Executes the wallpaper changing loop
@@ -76,6 +75,7 @@ class AWC(metaclass=Singleton):
         update_object = self.cfg_parser["Runtime-Config"]
 
         update_object["Time_Since_Last_TimeStep"] = str(self.time_since_last_timestep)
+        update_object["Date"] = str(datetime.date.today())
 
         with open(self.cfg_path, "w") as f:
             self.cfg_parser.write(f)
@@ -93,6 +93,7 @@ class AWC(metaclass=Singleton):
     def automatic_loop(self, wallpaper_folder_path):
         """Runs the part of the program that changes the desktop wallpaper"""
         while True:
+            time.sleep(1)
             # Checks if any action for the gui tray is taken and returns true if config.cfg is changed
             if self.gui_tray.run():
                 self.get_data()
@@ -108,21 +109,12 @@ class AWC(metaclass=Singleton):
             else:
                 # On first run get the data of the different actions
                 actual_time = round(time.time())
-                if self.initialized:
-                    # On first activation set desktop the slow way
-                    if round(time.time()) >= (self.time_since_last_timestep + int(self.timestep)):
-                        self.update_config_file(actual_time)
-
-                        self.switch_background(wallpaper_folder_path)
-
-                        self.initialized = False
-
-                # Use sleep time for wait and update cfg
-                else:
-                    time.sleep(int(self.timestep))
+                # On first activation set desktop the slow way
+                if actual_time >= (self.time_since_last_timestep + int(self.timestep)):
                     self.update_config_file(actual_time)
 
                     self.switch_background(wallpaper_folder_path)
+
 
 
 if __name__ == "__main__":
