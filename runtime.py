@@ -3,6 +3,7 @@ import random
 import ctypes
 import configparser
 import time
+import datetime
 
 from gui import AWCGUITRAY
 
@@ -30,6 +31,7 @@ class AWC(metaclass=Singleton):
         self.wallpaper_path = ""
         self.time_since_last_timestep = 0
         self.timestep = 0
+        self.date = ""
 
         # Initializes the gui tray
         self.gui_tray = AWCGUITRAY()
@@ -55,11 +57,22 @@ class AWC(metaclass=Singleton):
         self.time_since_last_timestep = int(self.cfg_parser.get("Runtime-Config",
                                                                 "Time_Since_Last_TimeStep"))
 
-        self.timestep = int(self.cfg_parser.get("Runtime-Config", "Timestep_Selection"))
+        self.timestep = self.cfg_parser.get("Runtime-Config", "Timestep_Selection")
 
-    def update_config_file(self):
+        # brings data into the right format for datetime format
+        date_temp = self.cfg_parser.get("Runtime-Config", "Date")
+        date_temp = date_temp.split("-")
+        if date_temp[1][0] == "0":
+            date_temp[1] = date_temp[1][1:]
+
+        for i, o in enumerate(date_temp):
+            date_temp[i] = int(o)
+
+        self.date = datetime.date(date_temp[0], date_temp[1], date_temp[2])
+
+    def update_config_file(self, actual_time):
         """Updates the config file"""
-        self.time_since_last_timestep = round(time.time())
+        self.time_since_last_timestep = round(actual_time)
         update_object = self.cfg_parser["Runtime-Config"]
 
         update_object["Time_Since_Last_TimeStep"] = str(self.time_since_last_timestep)
@@ -80,25 +93,36 @@ class AWC(metaclass=Singleton):
     def automatic_loop(self, wallpaper_folder_path):
         """Runs the part of the program that changes the desktop wallpaper"""
         while True:
-            # Checks if any action for the gui tray is taken
-            self.gui_tray.run()
+            # Checks if any action for the gui tray is taken and returns true if config.cfg is changed
+            if self.gui_tray.run():
+                self.get_data()
 
-            # On first run get the data of the different actions
-            if self.initialized:
-                # On first activation set desktop the slow way
-                if round(time.time()) >= (self.time_since_last_timestep + self.timestep):
-                    self.update_config_file()
+            # Check if the timesteps are bigger than one day or not
+            if self.timestep == "1-Day":
+                if self.date < datetime.date.today():
+                    actual_time = time.time()
+                    self.update_config_file(actual_time)
 
                     self.switch_background(wallpaper_folder_path)
 
-                    self.initialized = False
-
-            # Use sleep time for wait and update cfg
             else:
-                time.sleep(self.timestep)
-                self.update_config_file()
+                # On first run get the data of the different actions
+                actual_time = round(time.time())
+                if self.initialized:
+                    # On first activation set desktop the slow way
+                    if round(time.time()) >= (self.time_since_last_timestep + int(self.timestep)):
+                        self.update_config_file(actual_time)
 
-                self.switch_background(wallpaper_folder_path)
+                        self.switch_background(wallpaper_folder_path)
+
+                        self.initialized = False
+
+                # Use sleep time for wait and update cfg
+                else:
+                    time.sleep(int(self.timestep))
+                    self.update_config_file(actual_time)
+
+                    self.switch_background(wallpaper_folder_path)
 
 
 if __name__ == "__main__":

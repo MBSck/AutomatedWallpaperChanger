@@ -9,13 +9,11 @@ import ctypes
 
 from Linker import Linker
 
-# It doenst work to only select one custom time
-
 
 class AWCGUI:
     """Sets up GUI that asks user at what time intervals he wants to change the desktop wallpaper"""
     def __init__(self):
-        """Initializes the GUI"""
+        """In itializes the GUI"""
         # Sets the theme
         sg.theme("DarkAmber")
 
@@ -24,7 +22,7 @@ class AWCGUI:
                        [sg.In(key="Path"), sg.FolderBrowse(key="Folder")],
 
                        [sg.Text("Time interval of wallpaper change:"),
-                        sg.Combo(["1 Week", "1 Day", "12 Hours", "1 Hour", "30 Minutes", "15 Minutes", "5 Minutes"],
+                        sg.Combo(["1 Day", "12 Hours", "1 Hour", "30 Minutes", "15 Minutes", "5 Minutes"],
                                  default_value="1 Day", key="Time")],
 
                        [sg.Checkbox("Custom time interval (If toggled, numbers below will count):", change_submits=True,
@@ -40,7 +38,7 @@ class AWCGUI:
         self.window = sg.Window("AWC - Config_Installer", self.layout, finalize=True)
 
         # Takes the shorter time frames and converts it into seconds for the time.sleep() function
-        self.timestep_second_dictionary = {"1 Week": 604800, "1 Day": 86400, "12 Hours": 43200,
+        self.timestep_second_dictionary = {"1 Day": "1-Day", "12 Hours": 43200,
                                   "1 Hour": 3600, "30 Minutes": 1800, "15 Minutes": 300, "5 Minutes": 300}
 
         # Checks for errors
@@ -81,6 +79,7 @@ class AWCGUI:
 
             # Runtime config
             f.write("[Runtime-Config]\n")
+            f.write(f"Date = {datetime.date.today()}\n")
             f.write(f"Time_Since_Last_TimeStep = {round(time.time())}\n")
 
             if values["CTimeBox"]:
@@ -276,14 +275,20 @@ class AWCGUITRAY:
 
             self.tray.close()
 
+            return False
+
         # Opens the config file for the desktop changer
         elif menu_item == 'Open':
             self.awc_gui().run()
+
+            return True
 
         elif menu_item == "Switch Wallpaper":
             self.get_data()
             self.update_config_file()
             self.switch_background(self.wallpaper_path)
+
+            return False
 
 
 if __name__ == "__main__":
