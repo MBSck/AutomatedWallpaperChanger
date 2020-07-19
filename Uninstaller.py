@@ -18,6 +18,9 @@ class Uninstaller:
         # Defines the popup
         self.popup = ""
 
+        # Popup Error Text
+        self.popup_scroll_text = ""
+
         # Sets the paths
         self.paths = []
         self.install_path = ""
@@ -56,8 +59,6 @@ class Uninstaller:
 
     def uninstall(self):
         """Uninstalls all files"""
-        sg.Popup("All Files Removed!")
-
         # Terminates the process
         try:
             os.system("taskkill /F /IM AWC.exe")
@@ -67,10 +68,15 @@ class Uninstaller:
 
         # Removes all files
         if os.path.isfile(self.autostart_file_path):
-            os.remove(self.autostart_path)
+            os.remove(self.autostart_file_path)
+
+        else:
+            self.popup_scroll_text += "AWC.exe.lnk not found in autostart folder.\n"
+            sg.popup_scrolled(self.popup_scroll_text)
+            sg.Popup("All Files Removed!")
 
         if os.path.isdir(self.install_path):
-            shutil.rmtree(self.install_path)
+            shutil.rmtree(self.install_path, ignore_errors=True)
 
 
 if __name__ == "__main__":
