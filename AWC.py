@@ -6,10 +6,7 @@ __author__ = "Marten Scheuck"
 
 """This runs the install process."""
 
-# Make from current time or day start time function
-# Make days start from this day at midnight
-# Tray blocks function of program with while loop
-
+# Fix linker
 # Make next and previous desktop wallpaper available
 
 if __name__ == "__main__":

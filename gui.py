@@ -51,6 +51,9 @@ class AWCGUI:
         # Sets paths
         self.install_path = os.path.dirname(os.path.abspath(__file__))
 
+        # For build
+        # self.install_path = os.path.dirname(os.path.abspath("AWC.exe"))
+
         # Defines the parser for the cfg files
         self.cfg_parser = configparser.RawConfigParser()
 
