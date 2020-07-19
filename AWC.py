@@ -10,14 +10,15 @@ __author__ = "Marten Scheuck"
 # Make file go into sidetray when executed
 # Make days start from this day at midnight
 
+# Make next and previous desktop available
+
 if __name__ == "__main__":
-    gui_install = InstallerGUI
-    gui_awc = AWCGUI
+    gui_install = AWCGUI
     awc = AWC
 
     if not os.path.isfile("config.cfg"):
         gui_install().run()
+        awc()
     else:
-        gui_awc().run()
+        awc()
 
-    awc()

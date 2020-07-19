@@ -3,17 +3,28 @@ import random
 import ctypes
 import configparser
 import time
-import sys
 
 # If time is bigger than 1 hour log it in file so python know what time it is
 # Make config file that logs the timesteps and folder the user wants to use
 # Log when desktop wallpaper is changed
 
 
-class AWC:
+class Singleton(type):
+    """Creates a singleton ~ Global Class"""
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+
+        return cls._instances[cls]
+
+
+class AWC(metaclass=Singleton):
     """The Automated Wallpaper Changer Mainframe"""
     def __init__(self):
         """Initializes the dataset"""
+        # sets the Paths
         self.wallpaper_path = ""
         self.time_since_last_timestep = 0
         self.timestep = 0
@@ -56,6 +67,11 @@ class AWC:
         file = random.choice(os.listdir(wallpaper_folder_path))
         return os.path.join(wallpaper_folder_path, file)
 
+    def switch_background(self, wallpaper_folder_path):
+        """Switches the background wallpaper"""
+        ctypes.windll.user32.SystemParametersInfoW(
+            20, 0, self.get_desktop_background_file_path(wallpaper_folder_path), 0)
+
     def automatic_loop(self, wallpaper_folder_path):
         """Runs the part of the program that changes the desktop wallpaper"""
         while True:
@@ -65,8 +81,7 @@ class AWC:
                 if round(time.time()) >= (self.time_since_last_timestep + self.timestep):
                     self.update_config_file()
 
-                    ctypes.windll.user32.SystemParametersInfoW(
-                        20, 0, self.get_desktop_background_file_path(wallpaper_folder_path), 0)
+                    self.switch_background(wallpaper_folder_path)
 
                     self.initialized = False
 
@@ -75,8 +90,7 @@ class AWC:
                 time.sleep(self.timestep)
                 self.update_config_file()
 
-                ctypes.windll.user32.SystemParametersInfoW(
-                    20, 0, self.get_desktop_background_file_path(wallpaper_folder_path), 0)
+                self.switch_background(wallpaper_folder_path)
 
 
 if __name__ == "__main__":
