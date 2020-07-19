@@ -7,10 +7,6 @@ import datetime
 
 from gui import AWCGUITRAY
 
-# If time is bigger than 1 hour log it in file so python know what time it is
-# Make config file that logs the timesteps and folder the user wants to use
-# Log when desktop wallpaper is changed
-
 
 class Singleton(type):
     """Creates a singleton ~ Global Class"""

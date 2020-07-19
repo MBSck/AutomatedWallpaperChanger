@@ -8,8 +8,8 @@ __author__ = "Marten Scheuck"
 
 """This runs the install process."""
 
-# Fix linker
 # Make next and previous desktop wallpaper available
+# Log when desktop wallpaper is changed
 
 if __name__ == "__main__":
     gui_install_update = AWCGUI

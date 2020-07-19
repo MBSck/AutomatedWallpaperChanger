@@ -2,8 +2,9 @@ import PySimpleGUI as sg
 import configparser
 import shutil
 import os
+import winshell
 
-# Buttons do not cause uninstall yet
+from pathlib import Path
 
 
 class Uninstaller:
@@ -25,7 +26,11 @@ class Uninstaller:
         self.paths = []
         self.install_path = ""
         self.autostart_path = ""
-        self.autostart_file_path = ""
+        self.autostart_path_file = ""
+
+        # Gets desktop path
+        self.desktop_path = Path(winshell.desktop())
+        self.desktop_path_file = os.path.join(self.desktop_path, "AWC.lnk")
 
         # Gets the data from the cfg file
         if os.path.isfile("config.cfg"):
@@ -55,7 +60,7 @@ class Uninstaller:
         self.install_path = self.cfg_parser.get("Install-Config", "Install_Path")
         self.autostart_path = self.cfg_parser.get("Install-Config", "Autostart_Path")
 
-        self.autostart_file_path = os.path.join(self.autostart_path, "AWC.lnk")
+        self.autostart_path_file = os.path.join(self.autostart_path, "AWC.lnk")
 
     def uninstall(self):
         """Uninstalls all files"""
@@ -67,8 +72,11 @@ class Uninstaller:
             pass
 
         # Removes all files
-        if os.path.isfile(self.autostart_file_path):
-            os.remove(self.autostart_file_path)
+        if os.path.isfile(self.autostart_path_file):
+            os.remove(self.autostart_path_file)
+
+        if os.path.isfile(self.desktop_path_file):
+            os.remove(self.desktop_path_file)
 
         else:
             self.popup_scroll_text += "AWC.exe.lnk not found in autostart folder.\n"
