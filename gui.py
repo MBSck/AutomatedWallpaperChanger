@@ -118,7 +118,7 @@ class AWCGUI:
         # Returns the custom time if it is selected
         if values["CTimeBox"]:
             # Yields error if custom time is set at 0
-            if (int(values["CHours"]) and int(values["CMinutes"]) and int(values["CSeconds"])) == 0:
+            if (int(values["CHours"] == 0)) and (int(values["CMinutes"]) == 0) and (int(values["CSeconds"]) == 0):
                 self.error = True
                 sg.PopupError("Input custom time or uncheck custom time box!")
 
@@ -135,7 +135,7 @@ class AWCGUI:
             sg.PopupError("Please select folder!")
 
         # Warns if neither time nor Custom time is selected
-        if (not values["CTimeBox"]) and (values["Time"] == ""):
+        if (values["CTimeBox"] is False) and (values["Time"] == ""):
             self.error = True
             sg.PopupError("No time selected!\nChoose either from drop down or custom time!")
 
@@ -143,7 +143,7 @@ class AWCGUI:
         """Checks if values are too much"""
         if values["CTimeBox"]:
             # Yields error if custom time is set at 0
-            if (int(values["CHours"]) and int(values["CMinutes"]) and int(values["CSeconds"])) == 0:
+            if (int(values["CHours"] == 0)) and (int(values["CMinutes"]) == 0) and (int(values["CSeconds"]) == 0):
                 self.error = True
                 sg.PopupError("Input custom time or uncheck custom time box!")
 
@@ -155,7 +155,7 @@ class AWCGUI:
                                   int(values["CMinutes"]) * 60 + int(values["CSeconds"]))
 
         # Warns if neither time nor Custom time is selected
-        if (not values["CTimeBox"]) and (values["Time"] == ""):
+        if (values["CTimeBox"] is False) and (values["Time"] == ""):
             self.error = True
             sg.PopupError("No time selected!\nChoose either from drop down or custom time!")
 
@@ -192,6 +192,7 @@ class AWCGUI:
                     if not self.error:
                         self.create_cfg_file(values)
                         self.linker(self.install_path, self.autostart_path)
+                        sg.Popup("Config Installed!")
                         break
 
                     else:
@@ -204,6 +205,7 @@ class AWCGUI:
                     # Checks if error occurred and send user back to installer, else exits and updates
                     if not self.error:
                         self.update_config_file(values)
+                        sg.Popup("Config updated!")
                         break
 
                     else:
