@@ -11,7 +11,6 @@ class Uninstaller:
     def __init__(self):
         """Gets the data and location of files"""
         sg.theme("Dark Amber")
-        sg.PopupYesNo("Uninstall AWC Tool?")
 
         # Defines the parser for the cfg files
         self.cfg_parser = configparser.RawConfigParser()
@@ -25,8 +24,22 @@ class Uninstaller:
         self.cfg_path = os.path.abspath("config.cfg")
         self.get_data()
 
-        # Uninstalls all files
-        self.uninstall()
+        # Runs the popup
+        self.window = ""
+        self.popup = ""
+        self.run_popup()
+
+    def run_popup(self):
+        """Shows and runs the popup"""
+        self.popup = sg.PopupYesNo("Uninstall AWC Tool?")
+
+        if self.popup == "Yes":
+            print("hello")
+            # Uninstalls all files
+            self.uninstall()
+
+        elif (self.popup == "No") or (self.popup == sg.WIN_CLOSED):
+            print("bye")
 
     def get_data(self):
         """Gets the data of all files"""
@@ -49,3 +62,4 @@ class Uninstaller:
 if __name__ == "__main__":
     uninst = Uninstaller
     uninst()
+
