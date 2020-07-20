@@ -1,6 +1,7 @@
 from gui import AWCGUI
 from runtime import AWC
 
+import psutil
 import os
 import PySimpleGUI as sg
 
@@ -11,11 +12,16 @@ __author__ = "Marten Scheuck"
 # Make next and previous desktop wallpaper available
 # Log when desktop wallpaper is changed
 
+# Solve root problem
+
 
 def check_if_running():
     """Checks if process is already running"""
+    if "awc" in (p.name() for p in psutil.process_iter()):
+        return True
 
-    return False
+    else:
+        return False
 
 
 def main():
@@ -24,10 +30,11 @@ def main():
     awc = AWC
 
     if check_if_running():
-        sg.PopupError("AWC is already running!")
+        # Checks if config file, if not runs installer
+        gui_install_update().run()
 
     else:
-        # Checks if config file, if not runs installer
+
         try:
             if not os.path.isfile("config.cfg"):
                 gui_install_update().run()
@@ -47,5 +54,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+        main()
 

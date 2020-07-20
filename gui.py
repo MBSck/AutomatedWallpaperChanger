@@ -49,10 +49,10 @@ class AWCGUI:
             f"C:\\Users\{getpass.getuser()}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 
         # Sets paths
-        self.install_path = os.path.dirname(os.path.abspath(__file__))
+        # self.install_path = os.path.dirname(os.path.abspath(__file__))
 
         # For build
-        # self.install_path = os.path.dirname(os.path.abspath("AWC.exe"))
+        self.install_path = os.path.dirname(os.path.abspath("AWC.exe"))
 
         # Defines the parser for the cfg files
         self.cfg_parser = configparser.RawConfigParser()

@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['AWC.py'],
-             pathex=['C:\\Users\\Marten\\PycharmProjects\\DesktopChanger'],
+             pathex=['C:\\Users\\LocalAdmin\\PycharmProjects\\DesktopChanger'],
              binaries=[],
              datas=[],
              hiddenimports=[],

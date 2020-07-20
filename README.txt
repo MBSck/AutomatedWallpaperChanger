@@ -4,7 +4,7 @@
 
 After starting the "AWC.exe" for the first time an input window will open
 that will ask you for the path in which the wallpapers (folder)
- are located that it is supposed to cycle through.
+are located that it is supposed to cycle through.
 
 Then you will have to input a Time - either a predefined one, or a custom
 time chosen by yourself, by ticking the checkbox and choosing it - and
