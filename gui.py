@@ -49,10 +49,10 @@ class AWCGUI:
             f"C:\\Users\{getpass.getuser()}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 
         # Sets paths
-        # self.install_path = os.path.dirname(os.path.abspath(__file__))
+        self.install_path = os.path.dirname(os.path.abspath(__file__))
 
         # For build
-        self.install_path = os.path.dirname(os.path.abspath("AWC.exe"))
+        # self.install_path = os.path.dirname(os.path.abspath("AWC.exe"))
 
         # Defines the parser for the cfg files
         self.cfg_parser = configparser.RawConfigParser()
@@ -274,13 +274,13 @@ class AWCGUITRAY:
 
         if menu_item == 'Exit':
             # Kills the AWC.exe task
+            self.tray.ShowMessage("Automated Desktop Changer", "Shutting Down AWC!")
             try:
+                self.tray.close()
                 os.system("taskkill /F /IM AWC.exe")
 
             except Exception as e:
                 pass
-
-            self.tray.close()
 
             return False
 
@@ -294,6 +294,8 @@ class AWCGUITRAY:
             self.get_data()
             self.update_config_file()
             self.switch_background(self.wallpaper_path)
+
+            return False
 
 
 if __name__ == "__main__":

@@ -28,6 +28,7 @@ class AWC(metaclass=Singleton):
         self.time_since_last_timestep = 0
         self.timestep = 0
         self.date = ""
+        self.wallpaper_name = ""
 
         # Initializes the gui tray
         self.gui_tray = AWCGUITRAY()
@@ -79,6 +80,17 @@ class AWC(metaclass=Singleton):
     def get_desktop_background_file_path(self, wallpaper_folder_path):
         """Gets a file to change the wallpaper into from a specified folder"""
         file = random.choice(os.listdir(wallpaper_folder_path))
+        cond = True
+        while cond:
+            if file == self.wallpaper_name:
+                file = random.choice(os.listdir(wallpaper_folder_path))
+                print("same")
+
+            else:
+                self.wallpaper_name = file
+                print(file)
+                break
+
         return os.path.join(wallpaper_folder_path, file)
 
     def switch_background(self, wallpaper_folder_path):
@@ -91,8 +103,12 @@ class AWC(metaclass=Singleton):
         while True:
             time.sleep(1)
             # Checks if any action for the gui tray is taken and returns true if config.cfg is changed
-            if self.gui_tray.run():
-                self.get_data()
+            try:
+                if self.gui_tray.run():
+                    self.get_data()
+
+            except Exception as e:
+                pass
 
             # Check if the timesteps are bigger than one day or not
             if self.timestep == "1-Day":
@@ -112,19 +128,5 @@ class AWC(metaclass=Singleton):
                     self.switch_background(wallpaper_folder_path)
 
 
-
 if __name__ == "__main__":
-    cfg_parser = configparser.RawConfigParser()
-
-    # Gets the data from the cfg file
-    cfg_path = os.path.abspath("config.cfg")
-
-    cfg_parser.read(cfg_path)
-    wallpaper_path = cfg_parser.get("Automated-Wallpaper-Changer-Config", "Path")
-
-    time_since_last_timestep = cfg_parser.get("Automated-Wallpaper-Changer-Config",
-                                                        "Time_Since_Last_TimeStep")
-
-    timestep = cfg_parser.get("Automated-Wallpaper-Changer-Config", "Timestep_Selection")
-
-    print(wallpaper_path, timestep, time_since_last_timestep)
+    help(random.sample)
