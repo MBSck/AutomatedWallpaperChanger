@@ -81,14 +81,13 @@ class AWC(metaclass=Singleton):
         """Gets a file to change the wallpaper into from a specified folder"""
         file = random.choice(os.listdir(wallpaper_folder_path))
         cond = True
+
         while cond:
             if file == self.wallpaper_name:
                 file = random.choice(os.listdir(wallpaper_folder_path))
-                print("same")
 
-            else:
+            if file != self.wallpaper_name:
                 self.wallpaper_name = file
-                print(file)
                 break
 
         return os.path.join(wallpaper_folder_path, file)
@@ -102,6 +101,7 @@ class AWC(metaclass=Singleton):
         """Runs the part of the program that changes the desktop wallpaper"""
         while True:
             time.sleep(1)
+
             # Checks if any action for the gui tray is taken and returns true if config.cfg is changed
             try:
                 if self.gui_tray.run():

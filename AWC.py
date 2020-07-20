@@ -10,18 +10,23 @@ __author__ = "Marten Scheuck"
 """This runs the install process."""
 
 # Make next and previous desktop wallpaper available
-# Log when desktop wallpaper is changed
-
-# Solve root problem
+# Log when desktop wallpaper is change
 
 
-def check_if_running():
-    """Checks if process is already running"""
-    if "awc" in (p.name() for p in psutil.process_iter()):
-        return True
+def get_all_process():
+    """Cycles through all active processes and lists them"""
+    proc_list = list()
 
-    else:
-        return False
+    for proc in psutil.process_iter():
+        try:
+            proc_dict = proc.as_dict(attrs=["pid", "name", "cpu_percent"])
+
+            proc_list.append(proc_dict)
+
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            pass
+
+    return proc_list
 
 
 def main():
@@ -29,12 +34,26 @@ def main():
     gui_install_update = AWCGUI
     awc = AWC
 
-    if check_if_running():
+    # Process not running at start
+    process_running = False
+
+    # Gets process list
+    process_list = get_all_process()
+
+    """
+    # Cycles through active processes and compares by name
+    for proc in process_list:
+        if proc["name"] == "AWC.exe":
+            process_running = True
+            break
+    """
+
+    # Checks if process is running
+    if process_running:
         # Checks if config file, if not runs installer
         gui_install_update().run()
 
     else:
-
         try:
             if not os.path.isfile("config.cfg"):
                 gui_install_update().run()
@@ -44,7 +63,7 @@ def main():
 
         # Logs all errors
         except Exception as e:
-            sg.PopupError("An Error has occurred and was logged! Program shutting down!")
+            sg.PopupError("An Error has occurred! Program shutting down!")
             if os.path.isfile("error.log"):
                 with open("error.log", "a") as f:
                     f.write(str(e) + '\n')
@@ -54,5 +73,5 @@ def main():
 
 
 if __name__ == "__main__":
-        main()
+    main()
 

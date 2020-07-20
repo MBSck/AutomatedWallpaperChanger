@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['Uninstaller.py'],
-             pathex=['C:\\Users\\Marten\\PycharmProjects\\DesktopChanger'],
+             pathex=['C:\\Users\\LocalAdmin\\PycharmProjects\\DesktopChanger'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True , icon='Uninstall.ico')
+          console=False , icon='Uninstall.ico')

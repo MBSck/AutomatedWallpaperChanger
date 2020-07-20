@@ -7,7 +7,7 @@ import configparser
 import random
 import ctypes
 
-from Linker import Linker
+from linker import Linker
 
 
 class AWCGUI:
@@ -32,7 +32,7 @@ class AWCGUI:
                         sg.Text("Minutes"), sg.Spin([i for i in range(0, 60)], initial_value=0, key="CMinutes"),
                         sg.Text("Seconds"), sg.Spin([i for i in range(0, 60)], initial_value=0, key="CSeconds")],
 
-                       [sg.Button("Install"), sg.Button("Cancel")]]
+                       [sg.Button("Install"), sg.Button("Open Readme"), sg.Button("Cancel")]]
 
         # Initializes the Window
         self.window = sg.Window("AWC - Config_Installer", self.layout, finalize=True)
@@ -169,11 +169,20 @@ class AWCGUI:
 
             # Checks if the window is closed
             if (event == sg.WIN_CLOSED) or (event == "Cancel"):
-                break
+                # If the config is not yet created close program
+                if os.path.isfile("config.cfg"):
+                    break
 
-            # Formats Install Path so that folder is created
-            elif event == "InstallPath":
-                print("Hey")
+                # If it is the update window close window only
+                else:
+                    quit()
+
+            if event == "Open Readme":
+                if os.path.isfile("README.txt"):
+                    os.startfile(os.path.abspath("README.txt"))
+
+                else:
+                    sg.PopupError("No Readme.txt found!")
 
             # Formats Custom Time so everything is zero when pressed
             elif event == "CTimeBox":
@@ -194,7 +203,7 @@ class AWCGUI:
                     if not self.error:
                         self.create_cfg_file(values)
                         self.linker(self.install_path, self.autostart_path)
-                        sg.Popup("Config Installed!")
+                        sg.Popup("Configuration Installed!")
                         break
 
                     else:
@@ -207,7 +216,7 @@ class AWCGUI:
                     # Checks if error occurred and send user back to installer, else exits and updates
                     if not self.error:
                         self.update_config_file(values)
-                        sg.Popup("Config updated!")
+                        sg.Popup("Configuration Updated!")
                         break
 
                     else:
@@ -232,6 +241,7 @@ class AWCGUITRAY:
 
         # Get wallpaper path
         self.wallpaper_path = ""
+        self.wallpaper_name = ""
 
         # Sets timestep
         self.time_since_last_timestep = 0
@@ -248,6 +258,7 @@ class AWCGUITRAY:
         self.cfg_parser.read(self.cfg_path)
         self.wallpaper_path = self.cfg_parser.get("Runtime-Config", "Wallpaper_Path")
 
+
     def update_config_file(self):
         """Updates the config file"""
         self.time_since_last_timestep = round(time.time())
@@ -261,6 +272,16 @@ class AWCGUITRAY:
     def get_desktop_background_file_path(self, wallpaper_folder_path):
         """Gets a file to change the wallpaper into from a specified folder"""
         file = random.choice(os.listdir(wallpaper_folder_path))
+        cond = True
+
+        while cond:
+            if file == self.wallpaper_name:
+                file = random.choice(os.listdir(wallpaper_folder_path))
+
+            if file != self.wallpaper_name:
+                self.wallpaper_name = file
+                break
+
         return os.path.join(wallpaper_folder_path, file)
 
     def switch_background(self, wallpaper_folder_path):
@@ -279,7 +300,7 @@ class AWCGUITRAY:
                 self.tray.close()
                 os.system("taskkill /F /IM AWC.exe")
 
-            except Exception as e:
+            except Exception:
                 pass
 
             return False
@@ -292,8 +313,8 @@ class AWCGUITRAY:
 
         elif menu_item == "Switch Wallpaper":
             self.get_data()
-            self.update_config_file()
             self.switch_background(self.wallpaper_path)
+            self.update_config_file()
 
             return False
 

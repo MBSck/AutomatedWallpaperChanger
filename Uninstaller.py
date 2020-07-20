@@ -68,7 +68,7 @@ class Uninstaller:
         try:
             os.system("taskkill /F /IM AWC.exe")
 
-        except Exception as e:
+        except Exception:
             pass
 
         # Removes all files
@@ -78,10 +78,7 @@ class Uninstaller:
         if os.path.isfile(self.desktop_path_file):
             os.remove(self.desktop_path_file)
 
-        else:
-            self.popup_scroll_text += "AWC.exe.lnk not found in autostart folder.\n"
-            sg.popup_scrolled(self.popup_scroll_text)
-            sg.Popup("All Files Removed!")
+        sg.Popup("All Files Removed!")
 
         if os.path.isdir(self.install_path):
             shutil.rmtree(self.install_path, ignore_errors=True)
