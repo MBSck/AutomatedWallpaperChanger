@@ -22,7 +22,7 @@ class Linker:
     def create_shortcut(self, path):
         """Makes a shortcut of the .exe in the specified folder"""
         with winshell.shortcut(os.path.join(path, "AWC.lnk")) as link:
-            link.path = os.path.join(self.install_path, "AWC.exe")
+            link.path = os.path.join(self.install_path, "Launcher.exe")
             link.working_directory = self.install_path
 
 

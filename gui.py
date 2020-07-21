@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+import PySimpleGUIQt as sgqt
 import datetime
 import time
 import getpass
@@ -248,7 +249,7 @@ class AWCGUITRAY:
 
         # Config the menu
         self.menu = ['BLANK', ['&Open', '---', '&Action', ['Switch Wallpaper'], 'E&xit']]
-        self.tray = sg.SystemTray(menu=self.menu, filename="AWC.png")
+        self.tray = sgqt.SystemTray(menu=self.menu, filename="AWC.png")
 
         # Message after startup
         self.tray.ShowMessage("Automated Desktop Changer", "Application has been minimized!")
@@ -293,12 +294,16 @@ class AWCGUITRAY:
         """Runs the gui interface"""
         menu_item = self.tray.read(timeout=0)
 
-        if menu_item == 'Exit':
+        print(menu_item)
+
+        if menu_item == sgqt.EVENT_SYSTEM_TRAY_ICON_DOUBLE_CLICKED:
+            os.system("Updater.exe")
+
+        elif menu_item == 'Exit':
             # Kills the AWC.exe task
             self.tray.ShowMessage("Automated Desktop Changer", "Shutting Down AWC!")
             try:
-                self.tray.close()
-                os.system("taskkill /F /IM AWC.exe")
+                quit()
 
             except Exception:
                 pass
