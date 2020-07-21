@@ -1,7 +1,6 @@
 from gui import AWCGUI
 from runtime import AWC
 
-import psutil
 import os
 import PySimpleGUI as sg
 

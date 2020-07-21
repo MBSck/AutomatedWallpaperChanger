@@ -7,6 +7,7 @@ import os
 import configparser
 import random
 import ctypes
+import sys
 
 from linker import Linker
 
@@ -93,29 +94,6 @@ class AWCGUI:
 
             f.write(f"Wallpaper_Path = {values['Folder']}\n")
 
-    def update_config_file(self, values):
-        """Updates the config file"""
-        self.cfg_parser.read(os.path.abspath("config.cfg"))
-
-        update_object = self.cfg_parser["Runtime-Config"]
-
-        self.time_since_last_timestep = round(time.time())
-        update_object["Time_Since_Last_TimeStep"] = str(self.time_since_last_timestep)
-
-        # Updates the path to the wallpaper folder
-        if values["Path"] != "":
-            update_object["Wallpaper_Path"] = values["Path"]
-
-        # Updates time step selection
-        if values["CTimeBox"]:
-            update_object["Timestep_Selection"] = values["CTime"]
-
-        else:
-            update_object["Timestep_Selection"] = str(self.timestep_second_dictionary[values['Time']])
-
-        with open(os.path.abspath("config.cfg"), "w") as f:
-            self.cfg_parser.write(f)
-
     def install_checker(self, values):
         """Installs the program"""
         # Returns the custom time if it is selected
@@ -142,26 +120,6 @@ class AWCGUI:
             self.error = True
             sg.PopupError("No time selected!\nChoose either from drop down or custom time!")
 
-    def update_checker(self, values):
-        """Checks if values are too much"""
-        if values["CTimeBox"]:
-            # Yields error if custom time is set at 0
-            if (int(values["CHours"] == 0)) and (int(values["CMinutes"]) == 0) and (int(values["CSeconds"]) == 0):
-                self.error = True
-                sg.PopupError("Input custom time or uncheck custom time box!")
-
-            else:
-                # Warns that if time is selected as well the custom time will override it
-                sg.Popup("Custom time will override drop down selection!", keep_on_top=True)
-
-                values["CTime"] = str(int(values["CHours"]) * 3600 + \
-                                  int(values["CMinutes"]) * 60 + int(values["CSeconds"]))
-
-        # Warns if neither time nor Custom time is selected
-        if (values["CTimeBox"] is False) and (values["Time"] == ""):
-            self.error = True
-            sg.PopupError("No time selected!\nChoose either from drop down or custom time!")
-
     def run(self):
         """Logs the data changes it into seconds"""
         while True:
@@ -176,7 +134,7 @@ class AWCGUI:
 
                 # If it is the update window close window only
                 else:
-                    quit()
+                    sys.exit()
 
             if event == "Open Readme":
                 if os.path.isfile("README.txt"):
@@ -210,18 +168,9 @@ class AWCGUI:
                     else:
                         self.error = False
 
-                # Overwrites data contained in config.cfg if it exists
                 else:
-                    self.update_checker(values)
-
-                    # Checks if error occurred and send user back to installer, else exits and updates
-                    if not self.error:
-                        self.update_config_file(values)
-                        sg.Popup("Configuration Updated!")
-                        break
-
-                    else:
-                        self.error = False
+                    sg.PopupError("Already installed!")
+                    break
 
         self.window.Close()
 
@@ -294,8 +243,6 @@ class AWCGUITRAY:
         """Runs the gui interface"""
         menu_item = self.tray.read(timeout=0)
 
-        print(menu_item)
-
         if menu_item == sgqt.EVENT_SYSTEM_TRAY_ICON_DOUBLE_CLICKED:
             os.system("Updater.exe")
 
@@ -303,7 +250,7 @@ class AWCGUITRAY:
             # Kills the AWC.exe task
             self.tray.ShowMessage("Automated Desktop Changer", "Shutting Down AWC!")
             try:
-                quit()
+                sys.exit()
 
             except Exception:
                 pass
@@ -312,7 +259,7 @@ class AWCGUITRAY:
 
         # Opens the config file for the desktop changer
         elif menu_item == 'Open':
-            self.awc_gui().run()
+            os.system("Updater.exe")
 
             return True
 
@@ -325,7 +272,6 @@ class AWCGUITRAY:
 
 
 if __name__ == "__main__":
-    help(sg.SystemTray.read)
     gui = AWCGUI
     gui()
 

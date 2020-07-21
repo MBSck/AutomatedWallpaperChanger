@@ -2,6 +2,7 @@ import os
 import configparser
 import time
 import PySimpleGUI as sg
+import sys
 
 
 class Updater:
@@ -102,14 +103,14 @@ class Updater:
             # Checks if the window is closed
             if (event == sg.WIN_CLOSED) or (event == "Cancel"):
                 # If the config is not yet created close program
-                quit()
+                sys.exit()
 
             # Kills the task of the AWC.exe if terminated
             elif event == "Exit Program":
                 try:
                     os.system("taskkill /F /IM AWC.exe")
                     sg.Popup("Program Terminated!")
-                    quit()
+                    sys.exit()
 
                 except Exception:
                     pass

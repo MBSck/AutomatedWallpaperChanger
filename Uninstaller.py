@@ -3,6 +3,7 @@ import configparser
 import shutil
 import os
 import winshell
+import sys
 
 from pathlib import Path
 
@@ -82,6 +83,8 @@ class Uninstaller:
 
         if os.path.isdir(self.install_path):
             shutil.rmtree(self.install_path, ignore_errors=True)
+
+        sys.exit()
 
 
 if __name__ == "__main__":
