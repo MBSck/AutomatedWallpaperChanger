@@ -9,6 +9,8 @@ import random
 import ctypes
 import sys
 
+from Linux_Python.Linker import Linker
+
 
 class AWCGUI:
     """Sets up GUI that asks user at what time intervals he wants to change the desktop wallpaper"""
@@ -32,7 +34,7 @@ class AWCGUI:
                         sg.Text("Minutes"), sg.Spin([i for i in range(0, 60)], initial_value=0, key="CMinutes"),
                         sg.Text("Seconds"), sg.Spin([i for i in range(0, 60)], initial_value=0, key="CSeconds")],
 
-                       [sg.Button("Install"), sg.Button("Open Readme"), sg.Button("Cancel")]]
+                       [sg.Button("Install"), sg.Button("Open Readme"), sg.Button("Switch"), sg.Button("Cancel")]]
 
         # Initializes the Window
         self.window = sg.Window("AWC - Config_Installer", self.layout, finalize=True)
@@ -45,8 +47,7 @@ class AWCGUI:
         self.error = False
 
         # Gets the autostart folder and makes it into path
-        self.autostart_path = \
-            f"C:\\Users\{getpass.getuser()}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
+        self.autostart_path = f"/home/{getpass.getuser()}/"
 
         # For python file
         self.install_path = os.path.dirname(os.path.abspath("AWC.py"))
@@ -168,102 +169,6 @@ class AWCGUI:
                     break
 
         self.window.Close()
-
-
-class AWCGUITRAY:
-    """The Gui that gets minimized to tray as well as changes the config file if accessed"""
-    def __init__(self):
-        sg.theme("Dark Amber")
-
-        # Sets the GUI
-        self.awc_gui = AWCGUI
-
-        # Defines the parser for the cfg files
-        self.cfg_parser = configparser.RawConfigParser()
-
-        # Gets the data from the cfg file
-        self.cfg_path = os.path.abspath("config.cfg")
-
-        # Get wallpaper path
-        self.wallpaper_path = ""
-        self.wallpaper_name = ""
-
-        # Sets timestep
-        self.time_since_last_timestep = 0
-
-        # Config the menu
-        self.menu = ['BLANK', ['&Open', '---', '&Action', ['Switch Wallpaper'], 'E&xit']]
-        self.tray = sgqt.SystemTray(menu=self.menu, filename="../Linux/AWC.png")
-
-        # Message after startup
-        self.tray.ShowMessage("Automated Desktop Changer", "Application has been minimized!")
-
-    def get_data(self):
-        """Gets the data from the config file"""
-        self.cfg_parser.read(self.cfg_path)
-        self.wallpaper_path = self.cfg_parser.get("Runtime-Config", "Wallpaper_Path")
-
-
-    def update_config_file(self):
-        """Updates the config file"""
-        self.time_since_last_timestep = round(time.time())
-        update_object = self.cfg_parser["Runtime-Config"]
-
-        update_object["Time_Since_Last_TimeStep"] = str(self.time_since_last_timestep)
-
-        with open(self.cfg_path, "w") as f:
-            self.cfg_parser.write(f)
-
-    def get_desktop_background_file_path(self, wallpaper_folder_path):
-        """Gets a file to change the wallpaper into from a specified folder"""
-        file = random.choice(os.listdir(wallpaper_folder_path))
-        cond = True
-
-        while cond:
-            if file == self.wallpaper_name:
-                file = random.choice(os.listdir(wallpaper_folder_path))
-
-            if file != self.wallpaper_name:
-                self.wallpaper_name = file
-                break
-
-        return os.path.join(wallpaper_folder_path, file)
-
-    def switch_background(self, wallpaper_folder_path):
-        """Switches the background wallpaper"""
-        ctypes.windll.user32.SystemParametersInfoW(
-            20, 0, self.get_desktop_background_file_path(wallpaper_folder_path), 0)
-
-    def run(self):
-        """Runs the gui interface"""
-        menu_item = self.tray.read(timeout=0)
-
-        if menu_item == sgqt.EVENT_SYSTEM_TRAY_ICON_DOUBLE_CLICKED:
-            os.system("Updater.py")
-
-        elif menu_item == 'Exit':
-            # Kills the AWC.exe task
-            self.tray.ShowMessage("Automated Desktop Changer", "Shutting Down AWC!")
-            try:
-                sys.exit()
-
-            except Exception:
-                pass
-
-            return False
-
-        # Opens the config file for the desktop changer
-        elif menu_item == 'Open':
-            os.system("Updater.py")
-
-            return True
-
-        elif menu_item == "Switch Wallpaper":
-            self.get_data()
-            self.switch_background(self.wallpaper_path)
-            self.update_config_file()
-
-            return False
 
 
 if __name__ == "__main__":

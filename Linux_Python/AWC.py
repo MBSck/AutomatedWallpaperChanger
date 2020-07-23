@@ -2,6 +2,7 @@ from Linux_Python.gui import AWCGUI
 from Linux_Python.runtime import AWC
 
 import os
+import datetime
 import PySimpleGUI as sg
 
 __author__ = "Marten Scheuck"
@@ -29,10 +30,10 @@ def main():
         sg.PopupError("An Error has occurred! Program shutting down!")
         if os.path.isfile("error.log"):
             with open("error.log", "a") as f:
-                f.write("AWC.py - ERROR: " + str(e) + '\n')
+                f.write(f"AWC.py - {datetime.datetime.today()} - ERROR: " + str(e) + '\n')
         else:
             with open("error.log", "w") as f:
-                f.write("AWC.py - ERROR: " + str(e) + '\n')
+                f.write(f"AWC.py - {datetime.datetime.today()} - ERROR: " + str(e) + '\n')
 
 
 if __name__ == "__main__":
