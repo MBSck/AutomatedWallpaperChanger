@@ -1,12 +1,9 @@
 import PySimpleGUI as sg
-import PySimpleGUIQt as sgqt
 import datetime
 import time
 import getpass
 import os
 import configparser
-import random
-import ctypes
 import sys
 
 from Linux_Python.Linker import Linker

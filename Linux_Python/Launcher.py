@@ -2,6 +2,7 @@ import os
 import PySimpleGUI as sg
 import psutil
 import datetime
+import sys
 
 
 def get_all_process():
@@ -36,14 +37,14 @@ def launcher():
                 # Tries to launch either the update or the exe itself
                 if proc["name"] == "AWC.py":
                     awc_running = True
-                    os.system("Updater.py")
+                    os.system(f"python {os.path.abspath('Updater.py')}")
                     break
 
             except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
                 pass
 
         if awc_running is False:
-            os.system("AWC.py")
+            os.system(f"python {os.path.abspath('AWC.py')}")
 
     # Logs all errors
     except Exception as e:
@@ -54,6 +55,8 @@ def launcher():
         else:
             with open("error.log", "w") as f:
                 f.write(f"AWC_Launcher.py - {datetime.datetime.today()} - ERROR: " + str(e) + '\n')
+
+    sys.exit()
 
 
 if __name__ == "__main__":

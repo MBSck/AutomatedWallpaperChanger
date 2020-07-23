@@ -28,9 +28,6 @@ class AWC(metaclass=Singleton):
         self.date = ""
         self.wallpaper_name = ""
 
-        # Initializes the gui tray
-        self.gui_tray = AWCGUITRAY()
-
         # Defines the parser for the cfg files
         self.cfg_parser = configparser.RawConfigParser()
 
@@ -108,13 +105,7 @@ class AWC(metaclass=Singleton):
         while True:
             time.sleep(1)
 
-            # Checks if any action for the gui tray is taken and returns true if config.cfg is changed
-            try:
-                if self.gui_tray.run():
-                    self.get_data()
-
-            except Exception as e:
-                pass
+            self.get_data()
 
             # Check if the timesteps are bigger than one day or not
             if self.timestep == "1-Day":
