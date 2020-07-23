@@ -3,10 +3,7 @@ import random
 import subprocess
 import configparser
 import time
-
 import datetime
-
-from Linux_Python.gui import AWCGUITRAY
 
 
 class Singleton(type):
@@ -104,6 +101,7 @@ class AWC(metaclass=Singleton):
         subprocess.Popen(args1)
         subprocess.Popen(args2)
         args = ["xfdesktop", "--reload"]
+        subprocess.Popen(args)
 
     def automatic_loop(self, wallpaper_folder_path):
         """Runs the part of the program that changes the desktop wallpaper"""

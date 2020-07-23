@@ -12,9 +12,6 @@ class Linker:
         # Gets desktop path
         self.desktop_path = f"/home/{getpass.getuser()}/Desktop"
 
-        # Creates shortcut for autostart
-        self.create_shortcut(install_path, self.autostart_path)
-
         # Creates shortcut for desktop
         self.create_shortcut(install_path, self.desktop_path)
 
