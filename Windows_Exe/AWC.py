@@ -1,5 +1,5 @@
-from gui import AWCGUI
-from runtime import AWC
+from Windows_Exe.gui import AWCGUI
+from Windows_Exe.runtime import AWC
 
 import os
 import PySimpleGUI as sg

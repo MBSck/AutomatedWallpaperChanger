@@ -1,12 +1,12 @@
 import os
 import random
-import ctypes
+import subprocess
 import configparser
 import time
 
 import datetime
 
-from gui import AWCGUITRAY
+from Linux_Python.gui import AWCGUITRAY
 
 
 class Singleton(type):
@@ -95,8 +95,15 @@ class AWC(metaclass=Singleton):
 
     def switch_background(self, wallpaper_folder_path):
         """Switches the background wallpaper"""
-        ctypes.windll.user32.SystemParametersInfoW(
-            20, 0, self.get_desktop_background_file_path(wallpaper_folder_path), 0)
+        # Changes desktop background for linux xfce4
+        args0 = ["xfconf-query", "-c", "xfce4-desktop",
+             "-p", "/backdrop/screen0/monitor0/image-path", "-s", wallpaper_folder_path]
+        args1 = ["xfconf-query", "-c", "xfce4-desktop", "-p", "/backdrop/screen0/monitor0/image-style", "-s", "3"]
+        args2 = ["xfconf-query", "-c", "xfce4-desktop", "-p", "/backdrop/screen0/monitor0/image-show", "-s", "true"]
+        subprocess.Popen(args0)
+        subprocess.Popen(args1)
+        subprocess.Popen(args2)
+        args = ["xfdesktop", "--reload"]
 
     def automatic_loop(self, wallpaper_folder_path):
         """Runs the part of the program that changes the desktop wallpaper"""

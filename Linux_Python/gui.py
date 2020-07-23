@@ -9,8 +9,6 @@ import random
 import ctypes
 import sys
 
-from linker import Linker
-
 
 class AWCGUI:
     """Sets up GUI that asks user at what time intervals he wants to change the desktop wallpaper"""
@@ -50,11 +48,8 @@ class AWCGUI:
         self.autostart_path = \
             f"C:\\Users\{getpass.getuser()}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 
-        # Sets paths
-        # self.install_path = os.path.dirname(os.path.abspath(__file__))
-
-        # For build
-        self.install_path = os.path.dirname(os.path.abspath("AWC.exe"))
+        # For python file
+        self.install_path = os.path.dirname(os.path.abspath("AWC.py"))
 
         # Defines the parser for the cfg files
         self.cfg_parser = configparser.RawConfigParser()
@@ -137,8 +132,8 @@ class AWCGUI:
                     sys.exit()
 
             if event == "Open Readme":
-                if os.path.isfile("README.txt"):
-                    os.startfile(os.path.abspath("README.txt"))
+                if os.path.isfile("../Linux/README.txt"):
+                    os.startfile(os.path.abspath("../Linux/README.txt"))
 
                 else:
                     sg.PopupError("No Readme.txt found!")
@@ -198,7 +193,7 @@ class AWCGUITRAY:
 
         # Config the menu
         self.menu = ['BLANK', ['&Open', '---', '&Action', ['Switch Wallpaper'], 'E&xit']]
-        self.tray = sgqt.SystemTray(menu=self.menu, filename="AWC.png")
+        self.tray = sgqt.SystemTray(menu=self.menu, filename="../Linux/AWC.png")
 
         # Message after startup
         self.tray.ShowMessage("Automated Desktop Changer", "Application has been minimized!")
@@ -244,7 +239,7 @@ class AWCGUITRAY:
         menu_item = self.tray.read(timeout=0)
 
         if menu_item == sgqt.EVENT_SYSTEM_TRAY_ICON_DOUBLE_CLICKED:
-            os.system("Updater.exe")
+            os.system("Updater.py")
 
         elif menu_item == 'Exit':
             # Kills the AWC.exe task
@@ -259,7 +254,7 @@ class AWCGUITRAY:
 
         # Opens the config file for the desktop changer
         elif menu_item == 'Open':
-            os.system("Updater.exe")
+            os.system("Updater.py")
 
             return True
 
