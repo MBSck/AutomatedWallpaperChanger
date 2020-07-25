@@ -1,3 +1,0 @@
-AWC_Launcher.py - 2020-07-23 21:32:17.795915 - ERROR: name 'pos' is not defined
-AWC.py - 2020-07-23 21:33:08.206421 - ERROR: [Errno 17] File exists: '/home/marten/PycharmProjects/DesktopChanger/Linux_Python/Launcher.py' -> '/home/marten/Desktop'
-AWC.py - 2020-07-23 21:34:44.276395 - ERROR: name 'AWCGUITRAY' is not defined
