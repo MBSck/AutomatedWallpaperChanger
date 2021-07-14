@@ -52,7 +52,7 @@ Additionally all references to the "AWC.exe" have to be changed to "../AWC.py" a
 direct references to ".exe" related files.
 
 ## Linux-Version
-Disclaimer the code for this version has not been completed yet.
+>Disclaimer the code for this version has not been completed yet.
 
 ### Setup
 Coming soon
