@@ -5,7 +5,7 @@
 > Changes the desktop wallpaper with some widgets.
 
 ## Project Status
-Project: _is not being worked on at the time
+Project: _Is not being worked on at the time_
 
 ## Table of contents
 
