@@ -8,8 +8,9 @@
 _Is not currently being worked on_
 
 ## Table of contents
-
 * [Features](#Features)
+* [Screenshot](#Screenshot)
+* [GIFs](#GIFs)
 * [Windows-Version](#Windows-Version)
 * [Linux-Version](#Linux-Version)
 * [Contact](#Contact)
@@ -20,13 +21,21 @@ _Is not currently being worked on_
 * Runs in the background with very low CPU consumption ~0.%
 * Skip function to get next background is available
 
+## Screenshot
+GUI-Interface:
+![AWC_GUI](./img/AWC_gui.png)
+
+## GIFs
+This GIF shows how the updating process works and the wallpapers change:
+<img src="./img/UpdatingAWC.gif" width="800">
+In this GIF the manual switching mechanic is shown:
+<img src="./img/SwitchingWallpaper.gif" width="800">
+
 ## Windows-Version
 ### Table of contents
-
 * [Installation](#Installation)
 
 ### Installation
-
 The program for the windows version can either be run as a ".py" or a ".exe".
 If it is run as an ".exe" then only the compiled installer has to be run.
 
@@ -43,15 +52,12 @@ direct references to ".exe" related files.
 
 ## Linux-Version
 Disclaimer the code for this version has not been completed yet.
-### Table of contents
 
+### Table of contents
 * [Setup](#Setup)
 
 ### Setup
-
 Coming soon
 
 ## Contact
-
 Created by Marten B. Scheuck - feel free to contact me
-
