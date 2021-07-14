@@ -6,11 +6,11 @@
 
 ## Table of contents
 
-[Features](#Features)
-[Windows Version](#WindowsVersion)
-[Linux Version](#LinuxVersion)
+* [Features](#Features)
+* [Windows Version](#WindowsVersion)
+* [Linux Version](#LinuxVersion)
 
-# Features
+## Features
 * Automatically changes the Wallpaper from a previously set folder
 * Time spacings can be set and are completely variable
 * Runs in the background with very low CPU consumption ~0.%
