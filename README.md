@@ -23,12 +23,15 @@ _Is not currently being worked on_
 
 ## Screenshot
 GUI-Interface:
+
 ![AWC_GUI](./img/AWC_gui.png)
 
 ## GIFs
 This GIF shows how the updating process works and the wallpapers change:
+
 <img src="./img/UpdatingAWC.gif" width="800">
 In this GIF the manual switching mechanic is shown:
+
 <img src="./img/SwitchingWallpaper.gif" width="800">
 
 ## Windows-Version
