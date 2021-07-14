@@ -9,7 +9,7 @@ import random
 import ctypes
 import sys
 
-from linker import Linker
+from Linker import Linker
 
 
 class AWCGUI:

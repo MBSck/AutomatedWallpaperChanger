@@ -1,15 +1,15 @@
-from Windows_Exe.gui import AWCGUI
-from Windows_Exe.runtime import AWC
-
 import os
 import PySimpleGUI as sg
+
+from gui import AWCGUI
+from runtime import AWC
 
 __author__ = "Marten Scheuck"
 
 """This runs the install process."""
 
-# Make next and previous desktop wallpaper available
-# Log when desktop wallpaper is change
+#TODO: Make next and previous desktop wallpaper available
+#TODO: Log when desktop wallpaper is change
 
 
 def main():

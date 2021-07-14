@@ -6,7 +6,7 @@ import time
 
 import datetime
 
-from Windows.gui import AWCGUITRAY
+from gui import AWCGUITRAY
 
 
 class Singleton(type):
