@@ -35,8 +35,6 @@ In this GIF the manual switching mechanic is shown:
 <img src="./img/SwitchingWallpaper.gif" width="800">
 
 ## Windows-Version
-### Table of contents
-* [Installation](#Installation)
 
 ### Installation
 The program for the windows version can either be run as a ".py" or a ".exe".
@@ -55,9 +53,6 @@ direct references to ".exe" related files.
 
 ## Linux-Version
 Disclaimer the code for this version has not been completed yet.
-
-### Table of contents
-* [Setup](#Setup)
 
 ### Setup
 Coming soon
