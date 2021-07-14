@@ -9,10 +9,10 @@ Project: _is not being worked on at the time
 
 ## Table of contents
 
-* [Features](#Features)
-* [Windows Version](#WindowsVersion)
-* [Linux Version](#LinuxVersion)
-* [Contact](#Contact)
+* [Features](##Features)
+* [Windows Version](##WindowsVersion)
+* [Linux Version](##LinuxVersion)
+* [Contact](##Contact)
 
 ## Features
 * Automatically changes the Wallpaper from a previously set folder
@@ -23,7 +23,7 @@ Project: _is not being worked on at the time
 ## Windows Version
 ### Table of contents
 
-* [Installation](#Installation)
+* [Installation](###Installation)
 
 ### Installation
 
@@ -45,7 +45,7 @@ direct references to ".exe" related files.
 Disclaimer the code for this version has not been completed yet.
 ### Table of contents
 
-* [Setup](#Setup)
+* [Setup](###Setup)
 
 ### Setup
 
