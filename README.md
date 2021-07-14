@@ -10,8 +10,8 @@ _Is not currently being worked on_
 ## Table of contents
 
 * [Features](#Features)
-* [Windows Version](#WindowsVersion)
-* [Linux Version](#LinuxVersion)
+* [Windows-Version](#Windows-Version)
+* [Linux-Version](#Linux-Version)
 * [Contact](#Contact)
 
 ## Features
@@ -20,7 +20,7 @@ _Is not currently being worked on_
 * Runs in the background with very low CPU consumption ~0.%
 * Skip function to get next background is available
 
-## Windows Version
+## Windows-Version
 ### Table of contents
 
 * [Installation](#Installation)
@@ -41,7 +41,7 @@ The code can also be run in python3, however, one needs to fulfill the following
 Additionally all references to the "AWC.exe" have to be changed to "../AWC.py" as well some other
 direct references to ".exe" related files.
 
-## Linux Version
+## Linux-Version
 Disclaimer the code for this version has not been completed yet.
 ### Table of contents
 
