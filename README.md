@@ -41,7 +41,7 @@ The code can also be run in python3, however, one needs to fulfill the following
 Additionally all references to the "AWC.exe" have to be changed to "../AWC.py" as well some other
 direct references to ".exe" related files.
 
-## Linux version
+## Linux Version
 Disclaimer the code for this version has not been completed yet.
 ### Table of contents
 
