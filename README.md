@@ -22,16 +22,15 @@ _Is not currently being worked on_
 * Skip function to get next background is available
 
 ## Screenshot
-## GUI-Interface:
+### GUI-Interface:
 
 ![AWC_GUI](./img/AWC_gui.png)
 
 ## GIFs
-## This GIF shows how the updating process works and the wallpapers change:
-
+### This GIF shows how the updating process works and the wallpapers change:
 <img src="./img/UpdatingAWC.gif" width="800">
-## This GIF shows the manual switching mechanic:
 
+### This GIF shows the manual switching mechanic:
 <img src="./img/SwitchingWallpaper.gif" width="800">
 
 ## Windows-Version
