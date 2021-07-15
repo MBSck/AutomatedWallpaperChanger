@@ -30,7 +30,7 @@ _Is not currently being worked on_
 ### This GIF shows how the updating process works and the wallpapers change:
 
 <img src="./img/UpdatingAWC.gif" width="800">
-### In this GIF the manual switching mechanic is shown:
+### This GIF shows the manual switching mechanic:
 
 <img src="./img/SwitchingWallpaper.gif" width="800">
 
