@@ -1,2 +1,7 @@
 # added by lyniat
 .idea/
+
+# added by Marten
+__pycache__
+compiled/WindowsInstaller
+venv
